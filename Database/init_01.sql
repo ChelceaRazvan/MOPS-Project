@@ -303,3 +303,52 @@ CREATE TABLE NIR (
 
 );
 GO
+
+
+CREATE TABLE CreditNote (
+    Id INT IDENTITY(1,1) NOT NULL,
+    CN_Number NVARCHAR(100) NOT NULL,
+    CN_Date DATE NOT NULL,
+
+    Supplier_Id NVARCHAR(255) NOT NULL,
+
+    Currency_Code CHAR(3) NOT NULL,
+    Exchange_Rate DECIMAL(18,6),
+
+    Invoice_Id INT,                            -- FK optional
+    Amount DECIMAL(18,2) NOT NULL DEFAULT 0,
+    Tax_Amount DECIMAL(18,2) NOT NULL DEFAULT 0,
+    Total_Amount AS (Amount + Tax_Amount),
+    Status NVARCHAR(20) NOT NULL DEFAULT 'Draft',
+    Notes NVARCHAR(MAX),
+
+    CONSTRAINT PK_CreditNote PRIMARY KEY CLUSTERED (Id),
+
+    CONSTRAINT FK_CreditNote_PurchaseInvoice
+        FOREIGN KEY (Invoice_Id) REFERENCES Invoice(Id),
+);
+GO
+
+
+
+CREATE TABLE Stock_Log (
+    Id INT IDENTITY(1,1) NOT NULL,
+
+    Item_Id INT NOT NULL,                -- FK → Items.Id
+    Document_Detail_Id INT NOT NULL,     -- FK → Document_Detail.Id
+    Qtty DECIMAL(18,2) NOT NULL,         -- cantitatea mutată
+    Movement_Type TINYINT NOT NULL,      -- 1 = ieșire, 2 = intrare
+
+    Log_Date DATETIME NOT NULL DEFAULT GETDATE(),  -- timestamp intrare log
+
+    CONSTRAINT PK_StockLog PRIMARY KEY CLUSTERED (Id),
+
+    CONSTRAINT FK_StockLog_Item
+        FOREIGN KEY (Item_Id) REFERENCES Items(Id),
+
+    CONSTRAINT FK_StockLog_DocumentDetail
+        FOREIGN KEY (Document_Detail_Id) REFERENCES Document_Detail(Id)
+);
+GO
+
+
