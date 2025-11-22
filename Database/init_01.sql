@@ -157,7 +157,7 @@ GO
 CREATE TABLE Document (
     Id INT IDENTITY(1,1) NOT NULL,
     User_Id INT NOT NULL,                  -- FK -> Users.Id
-    State TINYINT NOT NULL,                -- exemplu: 0 draft, 1 finalized
+    Document_State NVARCHAR(20) NOT NULL DEFAULT 'Draft',                -- exemplu: 0 draft, 1 finalized
     Document_Date DATE NOT NULL,
     Document_Type NVARCHAR(50) NOT NULL,   -- ex: factura, aviz, etc.
 
@@ -173,14 +173,13 @@ CREATE TABLE [Order] (
     Id INT IDENTITY(1,1),            -- identificator unic
     Document_Id INT,                        -- optional
     Order_Number VARCHAR(50) NOT NULL,                 -- număr PO
-    Order_date DATE NOT NULL,
-    Type INT NOT NULL DEFAULT 1,                       -- 1 e cf 2 e cc
+    Order_Date DATE NOT NULL,
+    Order_Type INT NOT NULL DEFAULT 1,                       -- 1 e cf 2 e cc
     Supplier_Id INT,                       -- ID furnizor
     Client_Id INT,                          -- ID client (daca e cazul)
     Currency_Code CHAR(3) NOT NULL,                 -- RON/EUR/USD
     Exchange_Rate DECIMAL(18,6),                    -- rata de schimb
     Shipping_Address INT,                         -- adresă livrare
-    Status VARCHAR(20) NOT NULL DEFAULT 'draft',    -- status PO
     Notes NVARCHAR(MAX),                            -- observații
     Amount DECIMAL(18,2) DEFAULT 0,
     Tax_Amount DECIMAL(18,2) DEFAULT 0,
@@ -211,7 +210,7 @@ CREATE TABLE Invoice (
     Document_Id INT,
     Invoice_Number NVARCHAR(100) NOT NULL,
     Invoice_Date DATE NOT NULL,
-    Type INT NOT NULL DEFAULT 1,                       -- 1 e cf 2 e cc
+    Invoice_Type INT NOT NULL DEFAULT 1,                       -- 1 e cf 2 e cc
     Supplier_Id INT,                       -- ID furnizor
     Client_Id INT,                          -- ID client (daca e cazul)                              -- FK
     Shipping_Address INT,                                   -- FK
@@ -223,7 +222,6 @@ CREATE TABLE Invoice (
     Amount DECIMAL(18,2) NOT NULL DEFAULT 0,
     Tax_Total DECIMAL(18,2) NOT NULL DEFAULT 0,
     Total_Amount AS (Amount + Tax_Total),
-    Status NVARCHAR(20) NOT NULL DEFAULT 'Draft',
     Notes NVARCHAR(MAX),
 
     CONSTRAINT PK_Invoice PRIMARY KEY CLUSTERED (Id),
@@ -255,12 +253,10 @@ CREATE TABLE NIR (
     Supplier_Id INT NOT NULL,         
     Currency_Code CHAR(3) NOT NULL,
     Exchange_Rate DECIMAL(18,6),
-    Status NVARCHAR(20) NOT NULL DEFAULT 'draft',
     Amount DECIMAL(18,2) NOT NULL DEFAULT 0,
     Tax_Amount DECIMAL(18,2) NOT NULL DEFAULT 0,
     Total_Amount AS (Amount + Tax_Amount),
-    Notes NVARCHAR(MAX),
-    Ship_To_Address_Id INT,                                 -- FK Contacts
+    Notes NVARCHAR(MAX),                               -- FK Contacts
 
     CONSTRAINT PK_NIR PRIMARY KEY CLUSTERED (Id),
 
@@ -285,7 +281,6 @@ CREATE TABLE CreditNote (
     Amount DECIMAL(18,2) NOT NULL DEFAULT 0,
     Tax_Amount DECIMAL(18,2) NOT NULL DEFAULT 0,
     Total_Amount AS (Amount + Tax_Amount),
-    Status NVARCHAR(20) NOT NULL DEFAULT 'Draft',
     Notes NVARCHAR(MAX),
 
     CONSTRAINT PK_CreditNote PRIMARY KEY CLUSTERED (Id),
@@ -312,7 +307,6 @@ CREATE TABLE Document_Detail (
     CONSTRAINT FK_DocumentDetail_Document
         FOREIGN KEY (Document_Id) REFERENCES Document(Id),
 
-    -- NOTĂ: dacă nu ai încă tabelul Items, spune-mi și îl creez 
     CONSTRAINT FK_DocumentDetail_Items
         FOREIGN KEY (Item_Id) REFERENCES Items(Id)
 );
