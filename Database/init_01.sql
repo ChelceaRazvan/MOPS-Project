@@ -1,6 +1,10 @@
-create database erp;
 
-use erp;
+-- drop database ERP
+create database ERP;
+GO
+
+use ERP;
+GO
 
 ----------------------------------------------------
 -- 1. CONTACTS
@@ -161,30 +165,8 @@ CREATE TABLE Document (
     CONSTRAINT FK_Document_Users 
         FOREIGN KEY (User_Id) REFERENCES Users(Id)
 );
-
-
-
-----------------------------------------------------
--- 2. DOCUMENT_DETAIL
-----------------------------------------------------
-CREATE TABLE Document_Detail (
-    Id INT IDENTITY(1,1) NOT NULL,
-    Document_Id INT NOT NULL,              -- FK -> Document.Id
-    Item_Id INT NOT NULL,                  -- FK -> Items.Id (îți pot crea tabelul)
-    Qtty DECIMAL(18,2) NOT NULL,
-    Unit_Price DECIMAL(18,2) NOT NULL,
-    Tax_Rate DECIMAL(5,2) NOT NULL,        -- procent TVA: ex 19.00
-
-    CONSTRAINT PK_DocumentDetail PRIMARY KEY CLUSTERED (Id),
-
-    CONSTRAINT FK_DocumentDetail_Document
-        FOREIGN KEY (Document_Id) REFERENCES Document(Id),
-
-    -- NOTĂ: dacă nu ai încă tabelul Items, spune-mi și îl creez 
-    CONSTRAINT FK_DocumentDetail_Items
-        FOREIGN KEY (Item_Id) REFERENCES Items(Id)
-);
 GO
+
 
 
 CREATE TABLE [Order] (
@@ -227,27 +209,20 @@ GO
 CREATE TABLE Invoice (
     Id INT IDENTITY(1,1) NOT NULL,
     Document_Id INT,
-
     Invoice_Number NVARCHAR(100) NOT NULL,
     Invoice_Date DATE NOT NULL,
     Type INT NOT NULL DEFAULT 1,                       -- 1 e cf 2 e cc
     Supplier_Id INT,                       -- ID furnizor
     Client_Id INT,                          -- ID client (daca e cazul)                              -- FK
-
     Shipping_Address INT,                                   -- FK
-
     Currency_Code CHAR(3) NOT NULL,
     Exchange_Rate DECIMAL(18,6),
-
     Payment_Terms NVARCHAR(50),
     Due_Date DATE,
-
     Order_Id INT,
-
     Amount DECIMAL(18,2) NOT NULL DEFAULT 0,
     Tax_Total DECIMAL(18,2) NOT NULL DEFAULT 0,
     Total_Amount AS (Amount + Tax_Total),
-
     Status NVARCHAR(20) NOT NULL DEFAULT 'Draft',
     Notes NVARCHAR(MAX),
 
@@ -274,22 +249,16 @@ GO
 CREATE TABLE NIR (
     Id INT IDENTITY(1,1) NOT NULL,
     Document_Id INT,
-
     Nir_Number NVARCHAR(100) NOT NULL,
     Nir_Date DATE NOT NULL,
     IsVRN INT NOT NULL DEFAULT 0, -- 1= VRN 0 = NIR
-
     Supplier_Id INT NOT NULL,         
-
     Currency_Code CHAR(3) NOT NULL,
     Exchange_Rate DECIMAL(18,6),
-
     Status NVARCHAR(20) NOT NULL DEFAULT 'draft',
-
     Amount DECIMAL(18,2) NOT NULL DEFAULT 0,
     Tax_Amount DECIMAL(18,2) NOT NULL DEFAULT 0,
     Total_Amount AS (Amount + Tax_Amount),
-
     Notes NVARCHAR(MAX),
     Ship_To_Address_Id INT,                                 -- FK Contacts
 
@@ -309,12 +278,9 @@ CREATE TABLE CreditNote (
     Id INT IDENTITY(1,1) NOT NULL,
     CN_Number NVARCHAR(100) NOT NULL,
     CN_Date DATE NOT NULL,
-
     Supplier_Id NVARCHAR(255) NOT NULL,
-
     Currency_Code CHAR(3) NOT NULL,
     Exchange_Rate DECIMAL(18,6),
-
     Invoice_Id INT,                            -- FK optional
     Amount DECIMAL(18,2) NOT NULL DEFAULT 0,
     Tax_Amount DECIMAL(18,2) NOT NULL DEFAULT 0,
@@ -330,15 +296,162 @@ CREATE TABLE CreditNote (
 GO
 
 
+----------------------------------------------------
+-- 2. DOCUMENT_DETAIL
+----------------------------------------------------
+CREATE TABLE Document_Detail (
+    Id INT IDENTITY(1,1) NOT NULL,
+    Document_Id INT NOT NULL,              -- FK -> Document.Id
+    Item_Id INT NOT NULL,                  -- FK -> Items.Id (îți pot crea tabelul)
+    Qtty DECIMAL(18,2) NOT NULL,
+    Unit_Price DECIMAL(18,2) NOT NULL,
+    Tax_Rate DECIMAL(5,2) NOT NULL,        -- procent TVA: ex 19.00
+
+    CONSTRAINT PK_DocumentDetail PRIMARY KEY CLUSTERED (Id),
+
+    CONSTRAINT FK_DocumentDetail_Document
+        FOREIGN KEY (Document_Id) REFERENCES Document(Id),
+
+    -- NOTĂ: dacă nu ai încă tabelul Items, spune-mi și îl creez 
+    CONSTRAINT FK_DocumentDetail_Items
+        FOREIGN KEY (Item_Id) REFERENCES Items(Id)
+);
+GO
+
+
+
+CREATE TABLE InvoiceDetail (
+    Invoice_Detail_Id INT NOT NULL,      -- identificator unic pentru linia de factură
+    Invoice_Id INT NOT NULL,                      -- referință către factura principală
+    Line_Number INT NOT NULL,                     -- număr linie
+    Item_Id INT NOT NULL,              -- cod produs / item_code
+    Qtty DECIMAL(18,2) NOT NULL,              -- cantitate
+    Unit_Price DECIMAL(18,2) NOT NULL,            -- preț unitar
+    VAT_Rate DECIMAL(5,2) NOT NULL,               -- rata TVA (ex: 19.00)
+    Line_Subtotal AS (Qtty * Unit_Price),     -- subtotal înainte de taxe (calculat automat)
+    Line_Tax_Amount AS ( (Qtty * Unit_Price) * (VAT_Rate / 100) ), -- calcul TVA
+    Line_Total AS ( (Qtty * Unit_Price) + ((Qtty * Unit_Price) * (VAT_Rate / 100)) ), -- total linie
+
+
+    CONSTRAINT PK_InvoiceDetail PRIMARY KEY CLUSTERED (Invoice_Detail_Id),
+
+    CONSTRAINT FK_InvoiceDetail_DocumentDetail FOREIGN KEY (Invoice_Detail_Id)
+        REFERENCES Document_Detail(Id),
+
+    CONSTRAINT FK_InvoiceDetail_Invoice FOREIGN KEY (Invoice_Id)
+        REFERENCES Invoice(Id),
+
+    CONSTRAINT FK_InvoiceDetail_Item
+        FOREIGN KEY (Item_Id) REFERENCES Items(Id)
+    
+);
+GO
+
+
+
+CREATE TABLE OrderDetail (
+    Order_Detail_Id INT NOT NULL,                -- identificator unic linie comandă
+    Order_Id INT NOT NULL,                       -- FK către Order
+    Line_Number INT NOT NULL,                    -- număr linie
+    Item_Id INT NOT NULL,                        -- cod produs
+    Qtty DECIMAL(18,2) NOT NULL,     -- cantitatea comandată
+    Unit_Price DECIMAL(18,2) NOT NULL,           -- preț unitar
+    VAT_Rate DECIMAL(5,2) NOT NULL,              -- cotă TVA
+    Line_Subtotal AS (Qtty * Unit_Price), 
+    Line_Tax_Amount AS ((Qtty * Unit_Price) * (VAT_Rate / 100)),
+    Line_Total AS ((Qtty * Unit_Price) + 
+                  ((Qtty * Unit_Price) * (VAT_Rate / 100))),
+
+    CONSTRAINT PK_OrderDetail PRIMARY KEY CLUSTERED (Order_Detail_Id),
+
+    CONSTRAINT FK_OrderDetail_DocumentDetail FOREIGN KEY (Order_Detail_Id)
+        REFERENCES Document_Detail(Id),    
+
+    CONSTRAINT FK_OrderDetail_Order FOREIGN KEY (Order_Id) 
+        REFERENCES Order(Id),
+
+    CONSTRAINT FK_OrderDetail_Item FOREIGN KEY (Item_Id)
+        REFERENCES Items(Id)
+);
+GO
+
+
+CREATE TABLE NIRDetail (
+    NIR_Detail_Id INT NOT NULL,                     -- identificator unic linie NIR
+    NIR_Id INT NOT NULL,                          -- FK către NIR (document recepție)
+    Line_Number INT NOT NULL,                     -- număr linie
+    Item_Id INT NOT NULL,                         -- cod produs
+    Qtty_Ordered DECIMAL(18,2) NOT NULL,          -- cantitate comandată
+    Quantity_Received DECIMAL(18,2) NOT NULL,     -- cantitatea recepționată
+    Unit_Price DECIMAL(18,2) NOT NULL,             -- cost unitar la recepție
+    VAT_Rate DECIMAL(5,2) NULL,              -- cotă TVA
+    Line_Subtotal AS (Quantity_Received * Unit_Price),
+    Line_Tax_Amount AS (
+        CASE 
+            WHEN VAT_Rate IS NULL THEN 0
+            ELSE (Quantity_Received * Unit_Price) * (VAT_Rate / 100)
+        END
+    ),
+    Line_Total AS (
+        (Quantity_Received * Unit_Price) + 
+        CASE 
+            WHEN VAT_Rate IS NULL THEN 0
+            ELSE (Quantity_Received * Unit_Price) * (VAT_Rate / 100)
+        END
+    ),
+
+    CONSTRAINT PK_NIRDetail PRIMARY KEY (NIR_Detail_Id),
+
+    CONSTRAINT FK_NIRDetail_DocumentDetail FOREIGN KEY (NIR_Detail_Id)
+        REFERENCES Document_Detail(Id),        
+
+    CONSTRAINT FK_NIRDetail_NIR FOREIGN KEY (NIR_Id)
+        REFERENCES NIR(Id),
+
+    CONSTRAINT FK_NIRDetail_Item FOREIGN KEY (Item_Id)
+        REFERENCES Items(Id)
+);
+GO
+
+
+CREATE TABLE CreditNoteDetail (
+    CreditNote_Line_Id INT NOT NULL,               -- identificator unic linie
+    CreditNote_Id INT NOT NULL,                    -- FK către CreditNote
+    Line_Number INT NOT NULL,                      -- număr linie
+    Item_Id INT NULL,                              -- opțional – dacă se leagă cu Items
+    UM VARCHAR(20) NULL,                           -- unitate de măsură
+    Qtty DECIMAL(18,2) NOT NULL,               -- cantitate creditată
+    Unit_Price DECIMAL(18,2) NOT NULL,             -- preț unitar fără TVA
+    VAT_Rate DECIMAL(5,2) NOT NULL,                -- cota TVA
+    Line_Subtotal AS (Qtty * Unit_Price),     -- valoare linie netă
+    Line_Tax_Amount AS ((Qtty * Unit_Price) * (VAT_Rate / 100)),
+    Line_Total AS (
+        (Qtty * Unit_Price) +
+        ((Qtty * Unit_Price) * (VAT_Rate / 100))
+    ),
+    Notes VARCHAR(MAX) NULL,                  -- observații
+
+    CONSTRAINT PK_CreditNoteDetail PRIMARY KEY (CreditNote_Line_Id),
+
+    CONSTRAINT FK_CreditNoteDetail_DocumentDetail FOREIGN KEY (CreditNote_Line_Id)
+        REFERENCES Document_Detail(Id),
+
+    CONSTRAINT FK_CreditNoteDetail_CreditNote FOREIGN KEY (CreditNote_Id)
+        REFERENCES CreditNote(Id),
+
+    CONSTRAINT FK_CreditNoteDetail_Item FOREIGN KEY (Item_Id)
+        REFERENCES Items(Id)
+);
+
+
+
 
 CREATE TABLE Stock_Log (
     Id INT IDENTITY(1,1) NOT NULL,
-
     Item_Id INT NOT NULL,                -- FK → Items.Id
     Document_Detail_Id INT NOT NULL,     -- FK → Document_Detail.Id
     Qtty DECIMAL(18,2) NOT NULL,         -- cantitatea mutată
     Movement_Type TINYINT NOT NULL,      -- 1 = ieșire, 2 = intrare
-
     Log_Date DATETIME NOT NULL DEFAULT GETDATE(),  -- timestamp intrare log
 
     CONSTRAINT PK_StockLog PRIMARY KEY CLUSTERED (Id),
@@ -350,5 +463,3 @@ CREATE TABLE Stock_Log (
         FOREIGN KEY (Document_Detail_Id) REFERENCES Document_Detail(Id)
 );
 GO
-
-
