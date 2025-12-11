@@ -1,8 +1,4 @@
 
--- drop database ERP
-create database ERP;
-GO
-
 use ERP;
 GO
 
@@ -198,8 +194,8 @@ CREATE TABLE [Order] (
     
     CONSTRAINT Order_Type
        CHECK (
-        (Type = 1 AND Client_Id IS NULL AND Supplier_Id IS NOT NULL)
-        OR (Type = 2 AND Supplier_Id IS NULL AND Client_Id IS NOT NULL))
+        (Order_Type = 1 AND Client_Id IS NULL AND Supplier_Id IS NOT NULL)
+        OR (Order_Type = 2 AND Supplier_Id IS NULL AND Client_Id IS NOT NULL))
 
 );
 GO
@@ -237,8 +233,8 @@ CREATE TABLE Invoice (
 
     CONSTRAINT Invoice_Type
        CHECK (
-        (Type = 1 AND Client_Id IS NULL AND Supplier_Id IS NOT NULL)
-        OR (Type = 2 AND Supplier_Id IS NULL AND Client_Id IS NOT NULL))
+        (Invoice_Type = 1 AND Client_Id IS NULL AND Supplier_Id IS NOT NULL)
+        OR (Invoice_Type = 2 AND Supplier_Id IS NULL AND Client_Id IS NOT NULL))
 );
 GO
 
@@ -362,7 +358,7 @@ CREATE TABLE OrderDetail (
         REFERENCES Document_Detail(Id),    
 
     CONSTRAINT FK_OrderDetail_Order FOREIGN KEY (Order_Id) 
-        REFERENCES Order(Id),
+        REFERENCES [Order](Id),
 
     CONSTRAINT FK_OrderDetail_Item FOREIGN KEY (Item_Id)
         REFERENCES Items(Id)
