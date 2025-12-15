@@ -4,12 +4,21 @@ from routes.register_routes import router as register_router
 from routes.login_routes import router as login_router
 from fastapi.middleware.cors import CORSMiddleware
 
+
+from routes import (contact_routes,
+                    supplier_routes,
+                    item_routes)
+
 app = FastAPI()
 
 Base.metadata.create_all(bind=engine)
 
 app.include_router(register_router)  
-app.include_router(login_router)     
+app.include_router(login_router)
+
+app.include_router(contact_routes.router)
+app.include_router(supplier_routes.router)
+app.include_router(item_routes.router)     
 
 
 app.add_middleware(
