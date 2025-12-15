@@ -1,4 +1,4 @@
-from database import get_db_connection
+from database import get_db as get_db_connection
 from schemas.item_create import ItemCreate
 from datetime import datetime
 

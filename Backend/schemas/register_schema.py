@@ -11,7 +11,7 @@ class RegisterSchema(BaseModel):
     roleInCompany: Optional[str] = Field(default=None, max_length=100)
     phone: Optional[str] = Field(default=None, max_length=50)
     salary: Optional[float] = None
-    email: Optional[EmailStr] = None  # dacă vrei fără validator, schimbă în Optional[str]
+    email: Optional[str] = None
 
     roleId: Optional[int] = Field(default=None, gt=0)
     roleName: Optional[str] = Field(default=None, min_length=2, max_length=100)
