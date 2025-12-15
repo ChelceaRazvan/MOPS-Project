@@ -1,4 +1,4 @@
-from database import get_db_connection
+from database import get_db as get_db_connection
 import schemas.supplier_create as SupplierCreate
 
 from repositories.contact_repo import create_contact
