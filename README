@@ -1,1 +1,6 @@
-AICI incepe TREABA baieti
+Comenzi pentru frontend
+npm create vite@latest Frontend -- --template react-ts
+cd Frontend
+npm install
+npm install axios react-router-dom 
+npm i react-router-dom axios react-hook-form zod @hookform/resolvers
