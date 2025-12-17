@@ -1,11 +1,15 @@
 
 import React from "react";
 import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+
 import "../styles/global.css";
 import "../styles/dashboard.css";
 
 //functia de permisiune pentru acces in pagina
 const Dashboard: React.FC = () => {
+  const navigate = useNavigate();
+
   const { user, logout } = useAuth();
 
   const fullName = user ? `${user.firstName} ${user.lastName}` : "Utilizator";
@@ -33,6 +37,21 @@ const Dashboard: React.FC = () => {
             </>
           )}
         </div>
+                <button
+          onClick={() => navigate("/suppliers")}
+          style={{
+            padding: "12px 20px",
+            borderRadius: 10,
+            border: "none",
+            background: "linear-gradient(90deg, var(--accent), var(--accent-2))",
+            color: "white",
+            fontWeight: 700,
+            cursor: "pointer",
+          }}
+        >
+          To All Suppliers
+        </button>
+
       </div>
     </div>
   );
