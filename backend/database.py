@@ -1,11 +1,20 @@
 import pyodbc
 
 def get_db_connection():
-    server = 'localhost,1433'  # Update this with your server name
-    database = 'Main'  # Update this with your database name
-    username = 'sa'  # Update this with your username
-    password = 'LicentaLixi!'  # Update this with your password
-    cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};'
-                          f'SERVER={server};DATABASE={database};'
-                          f'UID={username};PWD={password}')
-    return cnxn
+    # Pe Mac Intel, localhost:1433 este mapat corect către container
+    server = '127.0.0.1,1433' 
+    database = 'ERP' 
+    username = 'sa' 
+    password = 'LicentaLixi1!' 
+    
+    # Folosim Driver 18 (instalat via Brew) și parametrii de securitate obligatorii
+    connection_string = (
+        "DRIVER={ODBC Driver 18 for SQL Server};"
+        f"SERVER={server};"
+        f"DATABASE={database};"
+        f"UID={username};"
+        f"PWD={password};"
+        "Encrypt=yes;"
+        "TrustServerCertificate=yes;"
+        "Connection Timeout=30;"
+    )

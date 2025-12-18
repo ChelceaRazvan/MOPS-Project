@@ -1,6 +1,6 @@
 import pyodbc
 # Asigură-te că ai funcția get_db_connection definită undeva (ex: in database.py)
-from database import get_db_connection 
+from backend.database import get_db_connection
 
 def create_invoice_transaction() -> int:
     conn = get_db_connection()
