@@ -21,3 +21,11 @@ def create_invoice(invoice_data: sch.InvoiceCreateRequest):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
             detail=str(e)
         )
+    
+@router.post("/direct_invoices", status_code=200)
+def create_only_invoice(data: sch.OnlyInvoiceCreateRequest):
+    try:
+        new_id = repo.create_invoice_direct(data)
+        return {"invoice_id": new_id, "message": "Factura creata cu succes!"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

@@ -175,7 +175,7 @@ CREATE TABLE [Order] (
     Client_Id INT,                          -- ID client (daca e cazul)
     Currency_Code CHAR(3) NOT NULL,                 -- RON/EUR/USD
     Exchange_Rate DECIMAL(18,6),                    -- rata de schimb
-    Shipping_Address INT,                         -- adresă livrare
+    Shipping_Address NVARCHAR(MAX),                         -- adresă livrare
     Notes NVARCHAR(MAX),                            -- observații
     Amount DECIMAL(18,2) DEFAULT 0,
     Tax_Amount DECIMAL(18,2) DEFAULT 0,
@@ -209,7 +209,7 @@ CREATE TABLE Invoice (
     Invoice_Type INT NOT NULL DEFAULT 1,                       -- 1 e cf 2 e cc
     Supplier_Id INT,                       -- ID furnizor
     Client_Id INT,                          -- ID client (daca e cazul)                              -- FK
-    Shipping_Address INT,                                   -- FK
+    Shipping_Address NVARCHAR(MAX),                                   -- FK
     Currency_Code CHAR(3) NOT NULL,
     Exchange_Rate DECIMAL(18,6),
     Payment_Terms NVARCHAR(50),
