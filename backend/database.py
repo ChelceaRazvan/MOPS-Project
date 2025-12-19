@@ -18,3 +18,10 @@ def get_db_connection():
         "TrustServerCertificate=yes;"
         "Connection Timeout=30;"
     )
+    try:
+        conn = pyodbc.connect(connection_string)
+        return conn
+    except Exception as e:
+        print(f"CRITICAL: Eroare conexiune: {e}")
+        # Ridicăm eroarea mai departe pentru ca FastAPI să o prindă corect
+        raise Exception(f"Nu s-a putut conecta la baza de date: {e}")

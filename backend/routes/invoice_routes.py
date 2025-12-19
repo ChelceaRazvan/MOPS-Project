@@ -4,7 +4,7 @@ from backend.schemas import invoice_schema as sch
 
 router = APIRouter()
 
-@router.post("/invoices", response_model= repo.create_invoice_transaction, status_code=status.HTTP_201_CREATED)
+@router.post("/invoices", status_code=status.HTTP_200_OK)
 def create_invoice(invoice_data: sch.InvoiceCreateRequest):
     try:
         # Apeleaza repo-ul care face toata treaba (Header + Linii)
