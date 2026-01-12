@@ -1,0 +1,149 @@
+
+/* Admin page reuses dashboard layout */
+.admin-card {
+  width: min(100%, 980px);
+}
+
+/* Grid de carduri */
+.users-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Card utilizator */
+.user-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.user-card.open {
+  border-color: #8ba6ff50; /* ușoară evidențiere */
+}
+
+/* Header card (click pentru dropdown) */
+.user-card-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 16px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 100%);
+  color: #fff;
+  cursor: pointer;
+  border: 0;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.user-card-header:hover {
+  filter: brightness(1.05);
+}
+
+.user-name {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.user-role {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* Dropdown content */
+.user-dropdown {
+  padding: 12px 16px;
+  background: var(--card);
+}
+
+/* Acțiuni */
+.user-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.user-actions button {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 100%);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.user-actions button:hover {
+  filter: brightness(1.05);
+}
+
+/* Detalii utilizator */
+.user-detail {
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+/* Formulare inline */
+.form-inline {
+  padding: 10px 12px;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.form-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 8px 0;
+}
+
+.form-row label {
+  min-width: 180px;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.form-row input {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.form-actions .secondary {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.error {
+  color: #ff7a7a;
+}
+
+.error.small {
+  font-size: 0.9rem;
+  margin-top: 6px;
+}

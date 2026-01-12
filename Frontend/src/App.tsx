@@ -1,9 +1,12 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import ProtectedRoute from "./routes/ProtectedRoute";
+import ProtectedRoute, { AdminRoute } from "./routes/ProtectedRoute";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import AdminUsersPage from "./pages/AdminList";
+import AddContactPage from "./pages/AddContact";
+import AddClientPage from "./pages/AddClients";
 import SuppliersPage from "./pages/Suppliers";
 import AddSuppliersPage from "./pages/AddSupplierPage";
 import ItemsPage from "./pages/Items";
@@ -15,7 +18,6 @@ const App: React.FC = () => {
       <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-
       <Route
         path="/dashboard"
         element={
@@ -25,6 +27,29 @@ const App: React.FC = () => {
         }
       />
       <Route
+        path="/admin/users"
+        element={
+          <AdminRoute>
+            <AdminUsersPage/>
+          </AdminRoute>
+        }
+      />
+      <Route path="/add-contact" 
+        element={
+          <ProtectedRoute>
+            <AddContactPage />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/add-client" 
+        element={
+          <ProtectedRoute>
+            <AddClientPage />
+          </ProtectedRoute>
+        } 
+      />
+       <Route
         path="/suppliers"
         element={
           <ProtectedRoute>
@@ -59,11 +84,7 @@ const App: React.FC = () => {
           </ProtectedRoute>
           }
         />
-
-
       <Route path="*" element={<h3>404 - Not Found</h3>} />
     </Routes>
   );
 };
-
-export default App;

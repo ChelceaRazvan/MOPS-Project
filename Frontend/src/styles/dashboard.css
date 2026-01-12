@@ -23,17 +23,38 @@
   font-weight: 800;
 }
 
-.logout {
+.right-actions {
   position: absolute;
   right: 24px;
   top: 50%;
   transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; /* spațiu între Admin și Logout */
+}
+
+
+.logout {
   padding: 8px 14px;
   border-radius: 10px;
   border: 1px solid var(--border);
   background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 100%);
   color: white;
   font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 100%);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
   cursor: pointer;
 }
 
@@ -51,3 +72,30 @@
   box-shadow: 0 12px 40px rgba(0,0,0,0.35);
   text-align: center;
 }
+
+
+.actions-under-card {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.btn.primary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 100%);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+.btn.primary-btn:hover {
+  filter: brightness(1.05);
+}
+

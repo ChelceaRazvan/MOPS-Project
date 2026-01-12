@@ -1,22 +1,5 @@
-import React, { createContext, useState } from "react";
-
-export type User = {
-  id: number;
-  username: string;
-  firstName?: string | null;
-  lastName?: string | null;
-  role?: string | null;
-};
-
-export type AuthContextValue = {
-  user: User | null;
-  token: string | null;
-  login: (data: { token: string; user: User }) => void;
-  logout: () => void;
-};
-
-// eslint-disable-next-line react-refresh/only-export-components
-export const AuthContext = createContext<AuthContextValue | undefined>(undefined);
+import React, { useState } from "react";
+import { AuthContext, type User } from "./AuthContext";
 
 const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [token, setToken] = useState<string | null>(() => {
@@ -36,7 +19,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     try {
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
-    } catch {/* noop */}
+    } catch { /* noop */ }
   };
 
   const logout = () => {
@@ -45,7 +28,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     try {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-    } catch {/* noop */}
+    } catch { /* noop */ }
   };
 
   return (
