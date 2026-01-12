@@ -1,0 +1,89 @@
+
+/* contact_page.css */
+.contact-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(1000px 500px at 10% 0%, #1f2937 0%, transparent 62%),
+    linear-gradient(180deg, #0f172a, #0a1020 70%, #0b1220);
+  color: var(--text);
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.contact-page .topbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 24px;
+}
+
+.contact-page .title {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.contact-page .content {
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.contact-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px 28px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+  width: min(720px, 95vw);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.form-row {
+  display: grid;
+  gap: 6px;
+}
+
+.form-row label {
+  font-weight: 700;
+}
+
+.form-row input {
+  background: var(--input);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: var(--text);
+}
+
+.form-actions {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.form-actions button {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 100%);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.error {
+  color: #ff6b6b;
+  margin-bottom: 8px;
+}
+
+.success {
+  color: #6bff9d;
+  margin-bottom: 8px;
+}

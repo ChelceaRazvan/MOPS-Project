@@ -25,6 +25,7 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (values: FormData) => {
+    console.log("Login payload:", values); // <- vezi ce trimiți
     try {
       const res = await loginUser(values);
       login({ token: res.token, user: res.user });
