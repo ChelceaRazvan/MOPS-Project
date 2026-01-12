@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 from urllib.parse import quote_plus
+import pyodbc
 
 # ---------- SERVER & DATABASE ----------
 HOST = r"(localdb)\MSSQLLocalDB"  # or your server name
@@ -35,3 +36,15 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+CONNECTION_STRING = (
+    "DRIVER={ODBC Driver 18 for SQL Server};"
+    f"SERVER={HOST};"
+    f"DATABASE={DBNAME};"
+    "Trusted_Connection=yes;"
+    "Encrypt=yes;"
+    "TrustServerCertificate=yes;"
+)
+def get_db_connection():
+    return pyodbc.connect(CONNECTION_STRING)
