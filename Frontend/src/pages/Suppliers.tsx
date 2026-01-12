@@ -133,7 +133,21 @@ export default function SuppliersPage() {
         >
           Add Supplier
         </button>
-
+                <button
+            type="button"
+            onClick={() => navigate("/dashboard")}
+            style={{
+            padding: "12px 20px",
+            borderRadius: 10,
+            border: "1px solid var(--border)",
+            background: "transparent",
+            color: "var(--text)",
+            fontWeight: 600,
+            cursor: "pointer",
+            }}
+        >
+            Back to Dashboard
+        </button>
       </main>
     </div>
   );

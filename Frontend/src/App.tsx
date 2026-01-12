@@ -6,6 +6,8 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import SuppliersPage from "./pages/Suppliers";
 import AddSuppliersPage from "./pages/AddSupplierPage";
+import ItemsPage from "./pages/Items";
+import AddItemPage from "./pages/AddItemPage";
 
 const App: React.FC = () => {
   return (
@@ -39,6 +41,25 @@ const App: React.FC = () => {
           </ProtectedRoute>
           }
         />
+
+        <Route
+        path="/items"
+        element={
+          <ProtectedRoute>
+            <ItemsPage />
+          </ProtectedRoute>
+          }
+        />
+
+        <Route
+        path="/addItem"
+        element={
+          <ProtectedRoute>
+            <AddItemPage />
+          </ProtectedRoute>
+          }
+        />
+
 
       <Route path="*" element={<h3>404 - Not Found</h3>} />
     </Routes>

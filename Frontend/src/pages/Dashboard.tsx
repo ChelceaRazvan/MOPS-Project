@@ -37,20 +37,37 @@ const Dashboard: React.FC = () => {
             </>
           )}
         </div>
-                <button
-          onClick={() => navigate("/suppliers")}
-          style={{
-            padding: "12px 20px",
-            borderRadius: 10,
-            border: "none",
-            background: "linear-gradient(90deg, var(--accent), var(--accent-2))",
-            color: "white",
-            fontWeight: 700,
-            cursor: "pointer",
-          }}
-        >
-          To All Suppliers
-        </button>
+        <div style={{ display: "flex", gap: 16 }}>
+          <button
+            onClick={() => navigate("/suppliers")}
+            style={{
+              padding: "12px 20px",
+              borderRadius: 10,
+              border: "none",
+              background: "linear-gradient(90deg, var(--accent), var(--accent-2))",
+              color: "white",
+              fontWeight: 700,
+              cursor: "pointer",
+            }}
+          >
+            To All Suppliers
+          </button>
+
+          <button
+            onClick={() => navigate("/items")}
+            style={{
+              padding: "12px 20px",
+              borderRadius: 10,
+              border: "none",
+              background: "linear-gradient(90deg, var(--accent), var(--accent-2))",
+              color: "white",
+              fontWeight: 700,
+              cursor: "pointer",
+            }}
+          >
+            To All Items
+          </button>
+        </div>
 
       </div>
     </div>
