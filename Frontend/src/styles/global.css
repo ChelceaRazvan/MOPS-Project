@@ -1,0 +1,32 @@
+
+:root {
+  --bg1: #0f172a; /* slate-900 */
+  --bg2: #0b1220;
+  --card: rgba(17, 24, 39, 0.9); /* gray-900 with alpha */
+  --text: #e5e7eb; /* gray-200 */
+  --muted: #9ca3af; /* gray-400 */
+  --accent: #6366f1; /* indigo-500 */
+  --accent-2: #8b5cf6; /* violet-500 */
+  --accent-hover: #7c83f9;
+  --border: #1f2937; /* gray-800 */
+  --error: #ef4444;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  font-family: system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(900px 500px at 20% 10%, #1f2937 0%, transparent 60%),
+    radial-gradient(700px 400px at 80% 0%, #111827 0%, transparent 60%),
+    linear-gradient(180deg, var(--bg1), #0a1020 70%, var(--bg2));
+}
+
+.app-center {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}

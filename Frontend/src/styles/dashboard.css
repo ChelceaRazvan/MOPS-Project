@@ -1,0 +1,53 @@
+
+.dashboard {
+  min-height: 100vh;
+  background:
+    radial-gradient(1000px 500px at 10% 0%, #1f2937 0%, transparent 62%),
+    linear-gradient(180deg, #0f172a, #0a1020 70%, #0b1220);
+  color: var(--text);
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.topbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* centrăm titlul */
+  padding: 16px 24px;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.logout {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 100%);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.content {
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.card-center {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px 28px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+  text-align: center;
+}
