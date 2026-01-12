@@ -1,0 +1,92 @@
+:root {
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --card: #0b1220;
+  --border: rgba(255, 255, 255, 0.08);
+  --accent: #6366f1;
+  --accent-2: #22d3ee;
+}
+
+/* Layout */
+.dashboard {
+  min-height: 100vh;
+  background:
+    radial-gradient(1000px 500px at 10% 0%, #1f2937 0%, transparent 62%),
+    linear-gradient(180deg, #0f172a, #0a1020 70%, #0b1220);
+  color: var(--text);
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.topbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 24px;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.content {
+  padding: 24px;
+  width: 100%;
+}
+
+/* Table styles (full-width dashboard style) */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+thead {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+tbody tr:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Contact cell */
+.contact {
+  line-height: 1.3;
+}
+
+.contact-name {
+  font-weight: 600;
+}
+
+.contact-meta {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* Utility */
+.nowrap {
+  white-space: nowrap;
+}
+
+.truncate {
+  max-width: 260px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

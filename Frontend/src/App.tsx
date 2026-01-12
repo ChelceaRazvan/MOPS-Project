@@ -7,6 +7,10 @@ import Dashboard from "./pages/Dashboard";
 import AdminUsersPage from "./pages/AdminList";
 import AddContactPage from "./pages/AddContact";
 import AddClientPage from "./pages/AddClients";
+import SuppliersPage from "./pages/Suppliers";
+import AddSuppliersPage from "./pages/AddSupplierPage";
+import ItemsPage from "./pages/Items";
+import AddItemPage from "./pages/AddItemPage";
 
 const App: React.FC = () => {
   return (
@@ -45,9 +49,42 @@ const App: React.FC = () => {
           </ProtectedRoute>
         } 
       />
+       <Route
+        path="/suppliers"
+        element={
+          <ProtectedRoute>
+            <SuppliersPage />
+          </ProtectedRoute>
+          }
+        />
+
+        <Route
+        path="/addSupplier"
+        element={
+          <ProtectedRoute>
+            <AddSuppliersPage />
+          </ProtectedRoute>
+          }
+        />
+
+        <Route
+        path="/items"
+        element={
+          <ProtectedRoute>
+            <ItemsPage />
+          </ProtectedRoute>
+          }
+        />
+
+        <Route
+        path="/addItem"
+        element={
+          <ProtectedRoute>
+            <AddItemPage />
+          </ProtectedRoute>
+          }
+        />
       <Route path="*" element={<h3>404 - Not Found</h3>} />
     </Routes>
   );
 };
-
-export default App;
