@@ -1,0 +1,42 @@
+{
+  "hash": "e7ac5d14",
+  "configHash": "f7b5f1aa",
+  "lockfileHash": "c24f3ceb",
+  "browserHash": "832e1763",
+  "optimized": {
+    "axios": {
+      "src": "../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "c2c9ca13",
+      "needsInterop": false
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "e90519e6",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "75907e6c",
+      "needsInterop": true
+    },
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "028f5698",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "chunk-DgxVxUia": {
+      "file": "chunk-DgxVxUia.js",
+      "isDynamicEntry": false
+    },
+    "react-CGHifcHt": {
+      "file": "react-CGHifcHt.js",
+      "isDynamicEntry": false
+    }
+  }
+}
