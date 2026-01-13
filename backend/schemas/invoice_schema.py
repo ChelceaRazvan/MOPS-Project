@@ -29,7 +29,6 @@ class OnlyInvoiceCreateRequest(BaseModel):
     invoice_date: date
     invoice_type: int = 1  # 1 pentru Achizitie
     supplier_id: Optional[int] = None
-    client_id: Optional[int] = None
     currency_code: str = "RON"
     exchange_rate: float = 1.0
     payment_terms: Optional[str] = None

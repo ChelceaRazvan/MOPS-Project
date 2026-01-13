@@ -27,7 +27,6 @@ const endpoints = {
       invoice_date: "",
       invoice_type: "",
       supplier_id: "",
-      client_id: "",
       currency_code: "",
       exchange_rate: "",
       payment_terms: "",

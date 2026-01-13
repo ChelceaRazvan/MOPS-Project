@@ -60,13 +60,13 @@ def create_invoice_direct(data):
         DECLARE @new_id INT;
         EXEC [dbo].[usp_Add_Invoice_Header_Direct]
             @User_Id = ?, @Invoice_Number = ?, @Invoice_Date = ?, @Invoice_Type = ?,
-            @Supplier_Id = ?, @Client_Id = ?, @Currency_Code = ?, @Exchange_Rate = ?,
+            @Supplier_Id = ?, @Currency_Code = ?, @Exchange_Rate = ?,
             @Payment_Terms = ?, @Due_Date = ?, @Notes = ?, @New_Invoice_Id = @new_id OUTPUT;
         SELECT @new_id;
         """
         cursor.execute(header_sql, (
             data.user_id, data.invoice_number, data.invoice_date, data.invoice_type,
-            data.supplier_id, data.client_id, data.currency_code, data.exchange_rate,
+            data.supplier_id, data.currency_code, data.exchange_rate,
             data.payment_terms, data.due_date, data.notes
         ))
         invoice_id = cursor.fetchone()[0]
